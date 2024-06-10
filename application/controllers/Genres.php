@@ -18,6 +18,10 @@ class Genres extends CI_Controller {
 	public function view($id)
 	{
 		$data['genre'] = $this->Genre_model->get_genre($id);
+		if (empty($data['genre'])) {
+			show_404();
+		}
 		$this->load->view('genres/view', $data);
 	}
 }
+?>

@@ -1,5 +1,5 @@
 <?php $title = "Liste des Albums"; ?>
-<?php $this->load->view('templates/navbar', ['title' => $title]); ?>
+<?php $this->load->view('templates/header', ['title' => $title]); ?>
 
 <h1>Liste des Albums</h1>
 <ul>

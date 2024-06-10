@@ -18,6 +18,10 @@ class Albums extends CI_Controller {
 	public function view($id)
 	{
 		$data['album'] = $this->Album_model->get_album($id);
+		if (empty($data['album'])) {
+			show_404();
+		}
 		$this->load->view('albums/view', $data);
 	}
 }
+?>

@@ -18,6 +18,10 @@ class Artists extends CI_Controller {
 	public function view($id)
 	{
 		$data['artist'] = $this->Artist_model->get_artist($id);
+		if (empty($data['artist'])) {
+			show_404();
+		}
 		$this->load->view('artists/view', $data);
 	}
 }
+?>
