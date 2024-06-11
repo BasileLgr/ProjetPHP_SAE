@@ -13,6 +13,7 @@
 					<h5 class="card-title"><?php echo $album['name']; ?></h5>
 					<p class="card-text"><?php echo $album['year']; ?></p>
 					<p class="card-text"><strong>Genre:</strong> <?php echo $album['genre_name']; ?></p>
+					<p class="card-text"><strong>Artiste:</strong> <?php echo $album['artist_name']; ?></p>
 				</div>
 			</div>
 		</div>
