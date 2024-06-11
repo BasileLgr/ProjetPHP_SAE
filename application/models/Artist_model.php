@@ -19,5 +19,13 @@ class Artist_model extends CI_Model {
 		$query = $this->db->get_where('artist', array('id' => $id));
 		return $query->row_array();
 	}
+
+	public function search_artists($query)
+	{
+		$this->db->like('name', $query);
+		$query = $this->db->get('artist');
+		return $query->result_array();
+	}
+
 }
 ?>

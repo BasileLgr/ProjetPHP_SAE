@@ -28,6 +28,10 @@
 				<a class="nav-link" href="<?php echo site_url('songs'); ?>">Chansons</a>
 			</li>
 		</ul>
+		<form class="form-inline my-2 my-lg-0" action="<?php echo site_url('search'); ?>" method="get">
+			<input class="form-control mr-sm-2" type="search" name="q" placeholder="Rechercher" aria-label="Search">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+		</form>
 		<ul class="navbar-nav ml-auto">
 			<?php if ($this->session->userdata('user_id')): ?>
 				<li class="nav-item">

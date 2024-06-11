@@ -69,4 +69,6 @@ $route['login'] = 'login/index';
 $route['logout'] = 'login/logout';
 $route['dashboard'] = 'dashboard/index';
 $route['register'] = 'register/index';
+$route['search'] = 'search/index';
+
 

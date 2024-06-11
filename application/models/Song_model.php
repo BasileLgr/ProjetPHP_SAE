@@ -19,5 +19,14 @@ class Song_model extends CI_Model {
 		$query = $this->db->get_where('song', array('id' => $id));
 		return $query->row_array();
 	}
+
+
+	public function search_songs($query)
+	{
+		$this->db->like('name', $query);
+		$query = $this->db->get('song');
+		return $query->result_array();
+	}
+
 }
 ?>

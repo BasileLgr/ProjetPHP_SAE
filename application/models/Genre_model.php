@@ -19,5 +19,14 @@ class Genre_model extends CI_Model {
 		$query = $this->db->get_where('genre', array('id' => $id));
 		return $query->row_array();
 	}
+
+
+	public function search_genres($query)
+	{
+		$this->db->like('name', $query);
+		$query = $this->db->get('genre');
+		return $query->result_array();
+	}
+
 }
 ?>
