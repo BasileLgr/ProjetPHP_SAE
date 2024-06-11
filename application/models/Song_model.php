@@ -43,6 +43,7 @@ class Song_model extends CI_Model {
 		$this->db->join('artist', 'album.artistId = artist.id', 'left');
 		$this->db->like('song.name', $search_term);
 		$this->db->or_like('genre.name', $search_term); // Ajout de la recherche par genre
+		$this->db->or_like('artist.name', $search_term); // Ajout de la recherche par artiste
 		$query = $this->db->get();
 		return $query->result_array();
 	}
