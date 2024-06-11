@@ -10,22 +10,21 @@ class Album_model extends CI_Model {
 
 	public function get_albums()
 	{
-		$query = $this->db->get('album');
+		$this->db->select('album.*, cover.jpeg as cover_image');
+		$this->db->from('album');
+		$this->db->join('cover', 'album.coverId = cover.id', 'left');
+		$query = $this->db->get();
 		return $query->result_array();
 	}
 
 	public function get_album($id)
 	{
-		$query = $this->db->get_where('album', array('id' => $id));
+		$this->db->select('album.*, cover.jpeg as cover_image');
+		$this->db->from('album');
+		$this->db->join('cover', 'album.coverId = cover.id', 'left');
+		$this->db->where('album.id', $id);
+		$query = $this->db->get();
 		return $query->row_array();
 	}
-
-	public function search_albums($query)
-	{
-		$this->db->like('name', $query);
-		$query = $this->db->get('album');
-		return $query->result_array();
-	}
-
 }
 ?>

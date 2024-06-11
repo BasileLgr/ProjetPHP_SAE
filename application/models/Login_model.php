@@ -14,7 +14,7 @@ class Login_model extends CI_Model {
 		$query = $this->db->get('login');
 		$user = $query->row_array();
 
-		if ($user && password_verify($password, $user['Mot de Passe'])) {
+		if ($user && password_verify($password, $user['MotDePasse'])) {
 			return $user;
 		}
 		return false;
@@ -22,8 +22,20 @@ class Login_model extends CI_Model {
 
 	public function create_user($data)
 	{
+		// Log data for debugging
+		log_message('debug', 'User data to insert: ' . print_r($data, true));
+
 		$result = $this->db->insert('login', $data);
-		log_message('debug', 'Résultat de l\'insertion: ' . ($result ? 'Succès' : 'Échec'));
+
+		// Log the last query for debugging
+		log_message('debug', 'SQL Query: ' . $this->db->last_query());
+
+		if (!$result) {
+			// Log any database error
+			log_message('error', 'Database error: ' . print_r($this->db->error(), true));
+		}
+
+		log_message('debug', 'Insert result: ' . ($result ? 'Success' : 'Failure'));
 		return $result;
 	}
 }

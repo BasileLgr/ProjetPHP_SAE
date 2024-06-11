@@ -12,7 +12,6 @@ class Register extends CI_Controller {
 
 	public function index()
 	{
-		// Si l'utilisateur est déjà connecté, redirigez-le vers le tableau de bord
 		if ($this->session->userdata('user_id')) {
 			redirect('dashboard');
 		}
@@ -26,26 +25,26 @@ class Register extends CI_Controller {
 		$this->form_validation->set_rules('password', 'Mot de passe', 'required|min_length[6]');
 
 		if ($this->form_validation->run() === FALSE) {
+			log_message('debug', 'Form validation failed: ' . validation_errors());
 			$this->load->view('register/index');
 		} else {
 			$data = array(
 				'Pseudo' => $this->input->post('pseudo'),
 				'Email' => $this->input->post('email'),
-				'Mot de Passe' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
+				'MotDePasse' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
 			);
 
-			// Débogage des données
-			log_message('debug', 'Données utilisateur: ' . print_r($data, TRUE));
+			// Debugging data
+			log_message('debug', 'User data: ' . print_r($data, TRUE));
 
 			if ($this->Login_model->create_user($data)) {
-				// Afficher la requête SQL générée
-				log_message('debug', 'Requête SQL: ' . $this->db->last_query());
+				log_message('debug', 'SQL Query: ' . $this->db->last_query());
 				$data['success'] = 'Votre compte a été créé avec succès ! Vous pouvez maintenant vous connecter.';
 				$this->load->view('register/index', $data);
 			} else {
-				// Afficher les erreurs de la base de données
+				// Debugging database error
 				$db_error = $this->db->error();
-				log_message('error', 'Erreur DB: ' . print_r($db_error, TRUE));
+				log_message('error', 'Database error: ' . print_r($db_error, TRUE));
 				$data['error'] = 'Une erreur s\'est produite lors de la création de votre compte. Veuillez réessayer.';
 				$this->load->view('register/index', $data);
 			}

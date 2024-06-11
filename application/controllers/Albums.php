@@ -7,14 +7,10 @@ class Albums extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Album_model');
-		$this->check_login();
-	}
-
-	private function check_login()
-	{
-		if (!$this->session->userdata('user_id')) {
-			redirect('login');
-		}
+		// Supprimer ou commenter la ligne de vérification de session si elle existe
+		// if (!$this->session->userdata('logged_in')) {
+		//     redirect('login');
+		// }
 	}
 
 	public function index()
@@ -26,9 +22,6 @@ class Albums extends CI_Controller {
 	public function view($id)
 	{
 		$data['album'] = $this->Album_model->get_album($id);
-		if (empty($data['album'])) {
-			show_404();
-		}
 		$this->load->view('albums/view', $data);
 	}
 }

@@ -3,6 +3,7 @@
 <head>
 	<title><?php echo $title; ?></title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css'); ?>">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
