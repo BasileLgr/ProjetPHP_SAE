@@ -8,8 +8,6 @@
 	<br>
 	<a href="<?php echo site_url('artists'); ?>">Voir les Artistes</a>
 	<br>
-	<a href="<?php echo site_url('genres'); ?>">Voir les Genres</a>
-	<br>
 	<a href="<?php echo site_url('songs'); ?>">Voir les Chansons</a>
 </div>
 
