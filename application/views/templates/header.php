@@ -14,9 +14,6 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav mr-auto">
-			<!-- <li class="nav-item">
-                <a class="nav-link" href="<?php echo site_url('home'); ?>">Accueil</a>
-            </li> -->
 			<li class="nav-item">
 				<a class="nav-link" href="<?php echo site_url('albums'); ?>">Albums</a>
 			</li>
