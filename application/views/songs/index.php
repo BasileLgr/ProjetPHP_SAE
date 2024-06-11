@@ -8,6 +8,7 @@
 			<div class="card">
 				<div class="card-body">
 					<h5 class="card-title"><?php echo $song['name']; ?></h5>
+					<p class="card-text"><strong>Genre:</strong> <?php echo $song['genre_name']; ?></p>
 				</div>
 			</div>
 		</div>

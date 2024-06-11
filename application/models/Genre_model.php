@@ -20,13 +20,11 @@ class Genre_model extends CI_Model {
 		return $query->row_array();
 	}
 
-
-	public function search_genres($query)
+	public function search_genres($search_term)
 	{
-		$this->db->like('name', $query);
+		$this->db->like('name', $search_term);
 		$query = $this->db->get('genre');
 		return $query->result_array();
 	}
-
 }
 ?>

@@ -18,9 +18,6 @@ class Songs extends CI_Controller {
 	public function view($id)
 	{
 		$data['song'] = $this->Song_model->get_song($id);
-		if (empty($data['song'])) {
-			show_404();
-		}
 		$this->load->view('songs/view', $data);
 	}
 }

@@ -7,38 +7,45 @@ class Login extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Login_model');
+		$this->load->library('form_validation');
+		$this->load->library('session');
 	}
 
 	public function index()
 	{
-		// Si l'utilisateur est déjà connecté, redirigez-le vers le tableau de bord
-		if ($this->session->userdata('user_id')) {
-			redirect('dashboard');
-		}
 		$this->load->view('login/index');
 	}
 
 	public function authenticate()
 	{
-		$email = $this->input->post('email');
-		$password = $this->input->post('password');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+		$this->form_validation->set_rules('password', 'Mot de passe', 'required');
 
-		$user = $this->Login_model->verify_user($email, $password);
-
-		if ($user) {
-			// Définir les données de session et rediriger vers le tableau de bord
-			$this->session->set_userdata('user_id', $user['iDCompte']);
-			redirect('dashboard');
+		if ($this->form_validation->run() === FALSE) {
+			$this->load->view('login/index');
 		} else {
-			// Recharger la page de connexion avec un message d'erreur
-			$data['error'] = 'Email ou mot de passe invalide';
-			$this->load->view('login/index', $data);
+			$email = $this->input->post('email');
+			$password = $this->input->post('password');
+			$user = $this->Login_model->verify_user($email, $password);
+
+			if ($user) {
+				$this->session->set_userdata([
+					'user_id' => $user['iDCompte'],
+					'user_name' => $user['Pseudo'],
+					'user_email' => $user['Email']
+				]);
+				redirect('dashboard');
+			} else {
+				$data['error'] = 'Email ou mot de passe incorrect';
+				$this->load->view('login/index', $data);
+			}
 		}
 	}
 
 	public function logout()
 	{
-		$this->session->unset_userdata('user_id');
+		$this->session->unset_userdata(['user_id', 'user_name', 'user_email']);
+		$this->session->sess_destroy();
 		redirect('login');
 	}
 }

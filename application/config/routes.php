@@ -62,7 +62,6 @@ $route['translate_uri_dashes'] = FALSE;
 */
 $route['artists'] = 'artists/index';
 $route['albums'] = 'albums/index';
-$route['genres'] = 'genres/index';
 $route['songs'] = 'songs/index';
 $route['home'] = 'home/index';
 $route['login'] = 'login/index';

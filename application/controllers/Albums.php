@@ -7,10 +7,6 @@ class Albums extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Album_model');
-		// Supprimer ou commenter la ligne de vérification de session si elle existe
-		// if (!$this->session->userdata('logged_in')) {
-		//     redirect('login');
-		// }
 	}
 
 	public function index()

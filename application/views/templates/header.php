@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?php echo $title; ?></title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css'); ?>">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -13,9 +14,9 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item">
-				<a class="nav-link" href="<?php echo site_url('home'); ?>">Accueil</a>
-			</li>
+			<!-- <li class="nav-item">
+                <a class="nav-link" href="<?php echo site_url('home'); ?>">Accueil</a>
+            </li> -->
 			<li class="nav-item">
 				<a class="nav-link" href="<?php echo site_url('albums'); ?>">Albums</a>
 			</li>
@@ -23,27 +24,24 @@
 				<a class="nav-link" href="<?php echo site_url('artists'); ?>">Artistes</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="<?php echo site_url('genres'); ?>">Genres</a>
-			</li>
-			<li class="nav-item">
 				<a class="nav-link" href="<?php echo site_url('songs'); ?>">Chansons</a>
 			</li>
 		</ul>
 		<form class="form-inline my-2 my-lg-0" action="<?php echo site_url('search'); ?>" method="get">
-			<input class="form-control mr-sm-2" type="search" name="q" placeholder="Rechercher" aria-label="Search">
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+			<input class="form-control mr-sm-2" type="search" placeholder="Recherche" aria-label="Recherche" name="q">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
 		</form>
 		<ul class="navbar-nav ml-auto">
-			<?php if ($this->session->userdata('user_id')): ?>
+			<?php if ($this->session->userdata('user_name')): ?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo site_url('dashboard'); ?>">Bonjour, <?php echo $this->session->userdata('user_name'); ?></a>
+				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo site_url('login/logout'); ?>">Déconnexion</a>
 				</li>
 			<?php else: ?>
 				<li class="nav-item">
-					<a class="nav-link btn btn-primary text-white" href="<?php echo site_url('login'); ?>">Connexion</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link btn btn-secondary text-white ml-2" href="<?php echo site_url('register'); ?>">Inscription</a>
+					<a class="nav-link" href="<?php echo site_url('login'); ?>">Connexion</a>
 				</li>
 			<?php endif; ?>
 		</ul>
