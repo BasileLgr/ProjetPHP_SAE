@@ -53,8 +53,20 @@ $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+/*
+| -------------------------------------------------------------------------
+| Custom Routes
+| -------------------------------------------------------------------------
+| These are custom routes for your application.
+|
+*/
 $route['artists'] = 'artists/index';
 $route['albums'] = 'albums/index';
 $route['genres'] = 'genres/index';
 $route['songs'] = 'songs/index';
 $route['home'] = 'home/index';
+$route['login'] = 'login/index';
+$route['logout'] = 'login/logout';
+$route['dashboard'] = 'dashboard/index';
+$route['register'] = 'register/index';
+

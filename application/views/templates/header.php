@@ -11,7 +11,7 @@
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNav">
-		<ul class="navbar-nav">
+		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
 				<a class="nav-link" href="<?php echo site_url('home'); ?>">Accueil</a>
 			</li>
@@ -27,6 +27,20 @@
 			<li class="nav-item">
 				<a class="nav-link" href="<?php echo site_url('songs'); ?>">Chansons</a>
 			</li>
+		</ul>
+		<ul class="navbar-nav ml-auto">
+			<?php if ($this->session->userdata('user_id')): ?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo site_url('login/logout'); ?>">Déconnexion</a>
+				</li>
+			<?php else: ?>
+				<li class="nav-item">
+					<a class="nav-link btn btn-primary text-white" href="<?php echo site_url('login'); ?>">Connexion</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link btn btn-secondary text-white ml-2" href="<?php echo site_url('register'); ?>">Inscription</a>
+				</li>
+			<?php endif; ?>
 		</ul>
 	</div>
 </nav>

@@ -22,8 +22,9 @@ class Login_model extends CI_Model {
 
 	public function create_user($data)
 	{
-		$data['Mot de Passe'] = password_hash($data['Mot de Passe'], PASSWORD_BCRYPT);
-		return $this->db->insert('login', $data);
+		$result = $this->db->insert('login', $data);
+		log_message('debug', 'Résultat de l\'insertion: ' . ($result ? 'Succès' : 'Échec'));
+		return $result;
 	}
 }
 ?>

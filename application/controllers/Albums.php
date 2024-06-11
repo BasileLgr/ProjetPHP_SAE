@@ -7,6 +7,14 @@ class Albums extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Album_model');
+		$this->check_login();
+	}
+
+	private function check_login()
+	{
+		if (!$this->session->userdata('user_id')) {
+			redirect('login');
+		}
 	}
 
 	public function index()
