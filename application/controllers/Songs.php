@@ -9,11 +9,11 @@ class Songs extends CI_Controller {
 		$this->load->model('Song_model');
 	}
 
-	public function index()
-	{
-		$data['songs'] = $this->Song_model->get_songs();
-		$this->load->view('songs/index', $data);
-	}
+	//public function index()
+	//{
+	//	$data['songs'] = $this->Song_model->get_songs();
+	//	$this->load->view('songs/index', $data);
+	//}
 
 	public function view($id)
 	{

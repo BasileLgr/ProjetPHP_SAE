@@ -6,26 +6,25 @@ class Dashboard extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('User_model');
+		$this->load->model('Login_model');
 		$this->load->model('Playlist_model');
 		$this->load->library('session');
 	}
 
 	public function index()
 	{
-		$user_id = $this->session->userdata('user_id');
-
-		// Vérifier si l'utilisateur est connecté
-		if (!$user_id) {
+		if (!$this->session->userdata('logged_in')) {
 			redirect('login');
 		}
 
-		$data['user'] = $this->User_model->get_user($user_id);
+		$user_id = $this->session->userdata('user_id');
+		$data['user'] = $this->Login_model->get_user($user_id);
+		$data['playlists'] = $this->Playlist_model->get_user_playlists($user_id);
+		$data['title'] = 'Tableau de bord';
 
-		// Assurez-vous que get_playlists_by_user retourne un tableau vide s'il n'y a pas de playlists
-		$data['playlists'] = $this->Playlist_model->get_playlists_by_user($user_id) ?? [];
-
+		$this->load->view('templates/header', $data);
 		$this->load->view('dashboard/index', $data);
+		$this->load->view('templates/footer');
 	}
 
 	public function change_password()

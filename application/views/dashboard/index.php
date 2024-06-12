@@ -1,6 +1,3 @@
-<?php $title = "Tableau de Bord"; ?>
-<?php $this->load->view('templates/header', ['title' => $title]); ?>
-
 <div class="container mt-5">
 	<h1>Bienvenue, <?php echo $user['Pseudo']; ?> !</h1>
 
@@ -40,5 +37,3 @@
 		<button type="submit" class="btn btn-danger">Supprimer mon compte</button>
 	</form>
 </div>
-
-<?php $this->load->view('templates/footer'); ?>

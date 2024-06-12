@@ -13,6 +13,7 @@ class Library extends CI_Controller {
 	public function index()
 	{
 		if (!$this->session->userdata('logged_in')) {
+			$this->session->set_userdata('redirect_url', current_url());
 			redirect('login');
 		}
 

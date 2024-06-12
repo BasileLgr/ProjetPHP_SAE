@@ -9,11 +9,11 @@ class Artists extends CI_Controller {
 		$this->load->model('Artist_model');
 	}
 
-	public function index()
-	{
-		$data['artists'] = $this->Artist_model->get_artists();
-		$this->load->view('artists/index', $data);
-	}
+	//public function index()
+	//{
+	//	$data['artists'] = $this->Artist_model->get_artists();
+	//	$this->load->view('artists/index', $data);
+	//}
 
 	public function view($id)
 	{

@@ -29,22 +29,10 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="<?php echo site_url('home'); ?>">Accueil</a>
-				</li>
-				<li class="nav-item">
 					<a class="nav-link" href="<?php echo site_url('search'); ?>">Recherche</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo site_url('library'); ?>">Ma librairie</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?php echo site_url('albums'); ?>">Albums</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?php echo site_url('artists'); ?>">Artistes</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?php echo site_url('songs'); ?>">Chansons</a>
 				</li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0" action="<?php echo site_url('search'); ?>" method="get">

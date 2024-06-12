@@ -1,6 +1,4 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
 class Login_model extends CI_Model {
 
 	public function __construct()
@@ -22,21 +20,14 @@ class Login_model extends CI_Model {
 
 	public function create_user($data)
 	{
-		// Log data for debugging
-		log_message('debug', 'User data to insert: ' . print_r($data, true));
+		return $this->db->insert('login', $data);
+	}
 
-		$result = $this->db->insert('login', $data);
-
-		// Log the last query for debugging
-		log_message('debug', 'SQL Query: ' . $this->db->last_query());
-
-		if (!$result) {
-			// Log any database error
-			log_message('error', 'Database error: ' . print_r($this->db->error(), true));
-		}
-
-		log_message('debug', 'Insert result: ' . ($result ? 'Success' : 'Failure'));
-		return $result;
+	public function get_user($user_id)
+	{
+		$this->db->where('iDCompte', $user_id);
+		$query = $this->db->get('login');
+		return $query->row_array();
 	}
 }
 ?>

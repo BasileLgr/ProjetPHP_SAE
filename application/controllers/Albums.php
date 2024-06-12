@@ -9,11 +9,11 @@ class Albums extends CI_Controller {
 		$this->load->model('Album_model');
 	}
 
-	public function index()
-	{
-		$data['albums'] = $this->Album_model->get_albums();
-		$this->load->view('albums/index', $data);
-	}
+	//public function index()
+	//{
+	//	$data['albums'] = $this->Album_model->get_albums();
+	//	$this->load->view('albums/index', $data);
+	//}
 
 	public function view($id)
 	{
