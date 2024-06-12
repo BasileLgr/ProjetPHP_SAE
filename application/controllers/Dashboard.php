@@ -7,61 +7,76 @@ class Dashboard extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('User_model');
-		if (!$this->session->userdata('user_id')) {
-			redirect('login');
-		}
+		$this->load->model('Playlist_model');
+		$this->load->library('session');
 	}
 
 	public function index()
 	{
-		$data['user'] = $this->User_model->get_user($this->session->userdata('user_id'));
-		$this->load->view('dashboard/index', $data);
-	}
+		$user_id = $this->session->userdata('user_id');
 
-	public function update_profile()
-	{
-		$data['user'] = $this->User_model->get_user($this->session->userdata('user_id'));
-
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-		$this->form_validation->set_rules('pseudo', 'Pseudo', 'required');
-
-		if ($this->form_validation->run() === FALSE) {
-			$this->load->view('dashboard/update_profile', $data);
-		} else {
-			$update_data = array(
-				'Email' => $this->input->post('email'),
-				'Pseudo' => $this->input->post('pseudo')
-			);
-			$this->User_model->update_user($this->session->userdata('user_id'), $update_data);
-			redirect('dashboard');
+		// Vérifier si l'utilisateur est connecté
+		if (!$user_id) {
+			redirect('login');
 		}
+
+		$data['user'] = $this->User_model->get_user($user_id);
+
+		// Assurez-vous que get_playlists_by_user retourne un tableau vide s'il n'y a pas de playlists
+		$data['playlists'] = $this->Playlist_model->get_playlists_by_user($user_id) ?? [];
+
+		$this->load->view('dashboard/index', $data);
 	}
 
 	public function change_password()
 	{
-		$this->form_validation->set_rules('old_password', 'Ancien mot de passe', 'required');
-		$this->form_validation->set_rules('new_password', 'Nouveau mot de passe', 'required|min_length[6]');
-		$this->form_validation->set_rules('confirm_password', 'Confirmation mot de passe', 'required|matches[new_password]');
+		$user_id = $this->session->userdata('user_id');
+
+		// Vérifier si l'utilisateur est connecté
+		if (!$user_id) {
+			redirect('login');
+		}
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('current_password', 'Mot de passe actuel', 'required');
+		$this->form_validation->set_rules('new_password', 'Nouveau mot de passe', 'required|min_length[8]');
+		$this->form_validation->set_rules('confirm_password', 'Confirmer le nouveau mot de passe', 'required|matches[new_password]');
 
 		if ($this->form_validation->run() === FALSE) {
-			$this->load->view('dashboard/change_password');
+			$this->index();
 		} else {
-			$user = $this->User_model->get_user($this->session->userdata('user_id'));
-			if (password_verify($this->input->post('old_password'), $user['MotDePasse'])) {
-				$this->User_model->change_password($this->session->userdata('user_id'), $this->input->post('new_password'));
-				redirect('dashboard');
+			$current_password = $this->input->post('current_password');
+			$new_password = $this->input->post('new_password');
+
+			$user = $this->User_model->get_user($user_id);
+
+			if (password_verify($current_password, $user['MotDePasse'])) {
+				$new_password_hashed = password_hash($new_password, PASSWORD_DEFAULT);
+				$this->User_model->update_password($user_id, $new_password_hashed);
+				$this->session->set_flashdata('message', 'Mot de passe mis à jour avec succès.');
 			} else {
-				$this->session->set_flashdata('error', 'L\'ancien mot de passe est incorrect.');
-				$this->load->view('dashboard/change_password');
+				$this->session->set_flashdata('error', 'Le mot de passe actuel est incorrect.');
 			}
+
+			redirect('dashboard');
 		}
 	}
 
 	public function delete_account()
 	{
-		$this->User_model->delete_user($this->session->userdata('user_id'));
-		$this->session->sess_destroy();
-		redirect('login');
+		$user_id = $this->session->userdata('user_id');
+
+		// Vérifier si l'utilisateur est connecté
+		if (!$user_id) {
+			redirect('login');
+		}
+
+		$this->User_model->delete_user($user_id);
+		$this->session->unset_userdata('user_id');
+		$this->session->set_flashdata('message', 'Votre compte a été supprimé avec succès.');
+
+		redirect('home');
 	}
 }
 ?>
