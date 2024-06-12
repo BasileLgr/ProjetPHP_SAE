@@ -20,9 +20,17 @@ class Artist_model extends CI_Model {
 		return $query->row_array();
 	}
 
-	public function search_artists($search_term)
+	public function search_artists($query)
 	{
-		$this->db->like('name', $search_term);
+		$this->db->like('name', $query);
+		$query = $this->db->get('artist');
+		return $query->result_array();
+	}
+
+	public function get_random_artists($limit)
+	{
+		$this->db->order_by('id', 'RANDOM');
+		$this->db->limit($limit);
 		$query = $this->db->get('artist');
 		return $query->result_array();
 	}

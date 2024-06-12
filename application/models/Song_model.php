@@ -33,17 +33,16 @@ class Song_model extends CI_Model {
 		return $query->row_array();
 	}
 
-	public function search_songs($search_term)
+	public function search_songs($query)
 	{
-		$this->db->select('song.*, album.genreId, genre.name AS genre_name, album.artistId, artist.name AS artist_name');
+		$this->db->select('song.*, album.name as album_name, artist.name as artist_name');
 		$this->db->from('song');
-		$this->db->join('track', 'song.id = track.songId', 'left');
+		$this->db->join('track', 'track.songId = song.id', 'left');
 		$this->db->join('album', 'track.albumId = album.id', 'left');
-		$this->db->join('genre', 'album.genreId = genre.id', 'left');
 		$this->db->join('artist', 'album.artistId = artist.id', 'left');
-		$this->db->like('song.name', $search_term);
-		$this->db->or_like('genre.name', $search_term); // Ajout de la recherche par genre
-		$this->db->or_like('artist.name', $search_term); // Ajout de la recherche par artiste
+		$this->db->like('song.name', $query);
+		$this->db->or_like('album.name', $query);
+		$this->db->or_like('artist.name', $query);
 		$query = $this->db->get();
 		return $query->result_array();
 	}

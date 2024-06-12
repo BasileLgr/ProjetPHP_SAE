@@ -31,16 +31,16 @@ class Album_model extends CI_Model {
 		return $query->row_array();
 	}
 
-	public function search_albums($search_term)
+	public function search_albums($query)
 	{
 		$this->db->select('album.*, artist.name as artist_name, genre.name as genre_name, cover.jpeg as cover_image');
 		$this->db->from('album');
 		$this->db->join('artist', 'album.artistId = artist.id', 'left');
 		$this->db->join('genre', 'album.genreId = genre.id', 'left');
 		$this->db->join('cover', 'album.coverId = cover.id', 'left');
-		$this->db->like('album.name', $search_term);
-		$this->db->or_like('artist.name', $search_term);
-		$this->db->or_like('genre.name', $search_term);
+		$this->db->like('album.name', $query);
+		$this->db->or_like('artist.name', $query);
+		$this->db->or_like('genre.name', $query);
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -69,6 +69,31 @@ class Album_model extends CI_Model {
 		$songs = $query->result_array();
 
 		return ['albums' => $albums, 'songs' => $songs];
+	}
+
+	public function get_random_albums($limit)
+	{
+		$this->db->select('album.*, artist.name as artist_name, genre.name as genre_name');
+		$this->db->from('album');
+		$this->db->join('artist', 'album.artistId = artist.id', 'left');
+		$this->db->join('genre', 'album.genreId = genre.id', 'left');
+		$this->db->order_by('album.id', 'RANDOM');
+		$this->db->limit($limit);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_random_albums_with_covers($limit)
+	{
+		$this->db->select('album.*, artist.name as artist_name, genre.name as genre_name, cover.jpeg as cover_image');
+		$this->db->from('album');
+		$this->db->join('artist', 'album.artistId = artist.id', 'left');
+		$this->db->join('genre', 'album.genreId = genre.id', 'left');
+		$this->db->join('cover', 'album.coverId = cover.id', 'left');
+		$this->db->order_by('album.id', 'RANDOM');
+		$this->db->limit($limit);
+		$query = $this->db->get();
+		return $query->result_array();
 	}
 }
 ?>

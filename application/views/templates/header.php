@@ -32,6 +32,12 @@
 					<a class="nav-link" href="<?php echo site_url('home'); ?>">Accueil</a>
 				</li>
 				<li class="nav-item">
+					<a class="nav-link" href="<?php echo site_url('search'); ?>">Recherche</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo site_url('library'); ?>">Ma librairie</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link" href="<?php echo site_url('albums'); ?>">Albums</a>
 				</li>
 				<li class="nav-item">

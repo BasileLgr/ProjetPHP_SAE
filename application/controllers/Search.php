@@ -13,12 +13,24 @@ class Search extends CI_Controller {
 
 	public function index()
 	{
+		$data['title'] = 'Recherche';
+		$this->load->view('templates/header', $data);
+		$this->load->view('search/index');
+		$this->load->view('templates/footer');
+	}
+
+	public function results()
+	{
 		$query = $this->input->get('q');
+
+		$data['title'] = 'Résultats de recherche pour "' . htmlspecialchars($query) . '"';
 		$data['albums'] = $this->Album_model->search_albums($query);
 		$data['artists'] = $this->Artist_model->search_artists($query);
 		$data['songs'] = $this->Song_model->search_songs($query);
 
+		$this->load->view('templates/header', $data);
 		$this->load->view('search/results', $data);
+		$this->load->view('templates/footer');
 	}
 }
 ?>
