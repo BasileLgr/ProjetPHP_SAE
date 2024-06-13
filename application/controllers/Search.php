@@ -6,16 +6,40 @@ class Search extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Album_model');
 		$this->load->model('Artist_model');
+		$this->load->model('Album_model');
 		$this->load->model('Song_model');
 	}
 
 	public function index()
 	{
-		$data['title'] = 'Recherche';
+		$query = $this->input->get('q', TRUE);
+
+		// Assurez-vous que la variable $query est une chaîne vide si elle est null
+		if ($query === NULL) {
+			$query = '';
+		}
+
+		if (empty($query)) {
+			$data['artists'] = [];
+			$data['albums'] = [];
+			$data['songs'] = [];
+			$data['query'] = $query;
+
+			$this->load->view('templates/header', $data);
+			$this->load->view('search/results', $data);
+			$this->load->view('templates/footer');
+			return;
+		}
+
+		$data['artists'] = $this->Artist_model->search_artists($query);
+		$data['albums'] = $this->Album_model->search_albums($query);
+		$data['songs'] = $this->Song_model->search_songs($query);
+
+		$data['query'] = $query;
+
 		$this->load->view('templates/header', $data);
-		$this->load->view('search/index');
+		$this->load->view('search/results', $data);
 		$this->load->view('templates/footer');
 	}
 

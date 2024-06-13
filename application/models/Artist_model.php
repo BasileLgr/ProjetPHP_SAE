@@ -22,6 +22,10 @@ class Artist_model extends CI_Model {
 
 	public function search_artists($query)
 	{
+		if (empty($query)) {
+			return [];
+		}
+
 		$this->db->like('name', $query);
 		$query = $this->db->get('artist');
 		return $query->result_array();

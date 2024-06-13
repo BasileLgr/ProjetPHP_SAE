@@ -7,21 +7,19 @@ class Artists extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Artist_model');
+		$this->load->model('Album_model');
+		$this->load->model('Song_model');
 	}
-
-	//public function index()
-	//{
-	//	$data['artists'] = $this->Artist_model->get_artists();
-	//	$this->load->view('artists/index', $data);
-	//}
 
 	public function view($id)
 	{
 		$data['artist'] = $this->Artist_model->get_artist($id);
-		if (empty($data['artist'])) {
-			show_404();
-		}
-		$this->load->view('artists/view', $data);
+		$data['albums'] = $this->Album_model->get_albums_by_artist($id);
+		$data['songs'] = $this->Song_model->get_songs_by_artist($id);
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('artists/index', $data); // Appeler la vue index.php
+		$this->load->view('templates/footer');
 	}
 }
 ?>

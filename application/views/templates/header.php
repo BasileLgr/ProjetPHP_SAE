@@ -29,9 +29,6 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="<?php echo site_url('search'); ?>">Recherche</a>
-				</li>
-				<li class="nav-item">
 					<a class="nav-link" href="<?php echo site_url('library'); ?>">Ma librairie</a>
 				</li>
 			</ul>
