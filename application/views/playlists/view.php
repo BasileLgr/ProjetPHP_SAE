@@ -3,6 +3,7 @@
 
 <div class="container mt-5">
 	<h1><?php echo $playlist['name']; ?></h1>
+	<a href="<?php echo site_url('playlists/duplicate/' . $playlist['id']); ?>" class="btn btn-secondary">Dupliquer la Playlist</a>
 	<h2>Chansons</h2>
 	<ul>
 		<?php foreach ($songs as $song): ?>

@@ -71,5 +71,21 @@ class Playlists extends CI_Controller {
 		$this->Playlist_songs_model->remove_song_from_playlist($playlist_id, $song_id);
 		redirect('playlists/view/' . $playlist_id);
 	}
+
+	public function duplicate($id)
+	{
+		if (!$this->session->userdata('logged_in')) {
+			redirect('login');
+		}
+
+		$user_id = $this->session->userdata('user_id');
+		$new_playlist_id = $this->Playlist_model->duplicate_playlist($id, $user_id);
+
+		if ($new_playlist_id) {
+			redirect('library');
+		} else {
+			show_error('Erreur lors de la duplication de la playlist.');
+		}
+	}
 }
 ?>

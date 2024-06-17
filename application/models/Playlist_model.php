@@ -88,5 +88,43 @@ class Playlist_model extends CI_Model {
 		$query = $this->db->get('playlists');
 		return $query->result_array();
 	}
+
+	public function duplicate_playlist($playlist_id, $user_id)
+	{
+		// Duplicate playlist
+		$this->db->select('*');
+		$this->db->from('playlists');
+		$this->db->where('id', $playlist_id);
+		$query = $this->db->get();
+		$playlist = $query->row_array();
+
+		if ($playlist) {
+			$new_playlist_data = array(
+				'name' => $playlist['name'] . ' (Copie)',
+				'user_id' => $user_id
+			);
+			$this->db->insert('playlists', $new_playlist_data);
+			$new_playlist_id = $this->db->insert_id();
+
+			// Duplicate songs in playlist
+			$this->db->select('*');
+			$this->db->from('playlist_songs');
+			$this->db->where('playlist_id', $playlist_id);
+			$query = $this->db->get();
+			$songs = $query->result_array();
+
+			foreach ($songs as $song) {
+				$new_song_data = array(
+					'playlist_id' => $new_playlist_id,
+					'song_id' => $song['song_id']
+				);
+				$this->db->insert('playlist_songs', $new_song_data);
+			}
+
+			return $new_playlist_id;
+		}
+
+		return false;
+	}
 }
 ?>
