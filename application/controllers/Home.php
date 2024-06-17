@@ -15,9 +15,7 @@ class Home extends CI_Controller {
 		$data['artists'] = $this->Artist_model->get_random_artists(6);
 		$data['albums'] = $this->Album_model->get_random_albums_with_covers(6);
 		$data['title'] = 'Accueil';
-		$this->load->view('templates/header', $data);
 		$this->load->view('home', $data);
-		$this->load->view('templates/footer');
 	}
 }
 ?>

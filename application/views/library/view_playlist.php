@@ -1,5 +1,3 @@
-<?php $this->load->view('templates/header', ['title' => $title]); ?>
-
 <div class="container mt-5">
 	<h1>Détails de la Playlist</h1>
 
@@ -45,7 +43,7 @@
 					<input type="hidden" id="song_id" name="song_id" value="">
 					<div class="form-group">
 						<label for="playlist_id">Sélectionnez une playlist:</label>
-						<<select class="form-control" id="playlist_id" name="playlist_id">
+						<select class="form-control" id="playlist_id" name="playlist_id">
 							<?php foreach ($playlists as $playlist): ?>
 								<option value="<?php echo $playlist['id']; ?>"><?php echo $playlist['name']; ?></option>
 							<?php endforeach; ?>

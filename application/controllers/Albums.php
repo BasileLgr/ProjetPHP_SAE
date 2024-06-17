@@ -36,9 +36,7 @@ class Albums extends CI_Controller {
 			$data['playlists'] = [];
 		}
 
-		$this->load->view('templates/header', $data);
-		$this->load->view('albums/index', $data);  // Load the index.php view
-		$this->load->view('templates/footer');
+		$this->load->view('albums/index', $data);
 	}
 
 	public function list()
@@ -55,9 +53,8 @@ class Albums extends CI_Controller {
 		$data['order'] = $order;
 		$data['selected_genres'] = $selected_genres;
 
-		$this->load->view('templates/header', $data);
+
 		$this->load->view('albums/list', $data);
-		$this->load->view('templates/footer');
 	}
 }
 ?>

@@ -1,3 +1,4 @@
+<?php $title = "Ma Librairie"; ?>
 <?php $this->load->view('templates/header', ['title' => $title]); ?>
 
 <div class="container mt-5">

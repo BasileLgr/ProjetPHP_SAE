@@ -29,9 +29,7 @@ class Playlists extends CI_Controller {
 		$this->form_validation->set_rules('name', 'Name', 'required');
 
 		if ($this->form_validation->run() === FALSE) {
-			$this->load->view('templates/header', ['title' => 'Créer une Playlist']);
 			$this->load->view('library/create_playlist');
-			$this->load->view('templates/footer');
 		} else {
 			$name = $this->input->post('name');
 			$user_id = $this->session->userdata('user_id');
@@ -78,9 +76,7 @@ class Playlists extends CI_Controller {
 		$data['title'] = 'Détails de la Playlist';
 		$data['user_playlists'] = $this->Playlist_model->get_playlists_by_user($this->session->userdata('user_id'));
 
-		$this->load->view('templates/header', $data);
 		$this->load->view('playlists/view', $data);
-		$this->load->view('templates/footer');
 	}
 
 

@@ -21,9 +21,7 @@ class Library extends CI_Controller {
 		$data['title'] = 'Détails de la Playlist';
 		$data['user_playlists'] = $this->Playlist_model->get_playlists_by_user($this->session->userdata('user_id'));
 
-		$this->load->view('templates/header', $data);
 		$this->load->view('playlists/view', $data);
-		$this->load->view('templates/footer');
 	}
 
 	public function index()
@@ -35,9 +33,7 @@ class Library extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$data['playlists'] = $this->Playlist_model->get_playlists_by_user($user_id);
 
-		$this->load->view('templates/header', ['title' => 'Ma Librairie']);
 		$this->load->view('library/index', $data);
-		$this->load->view('templates/footer');
 	}
 
 	public function view_playlist($id)
@@ -51,7 +47,6 @@ class Library extends CI_Controller {
 
 		$this->load->view('templates/header', ['title' => 'Détails de la Playlist']);
 		$this->load->view('library/view_playlist', $data);
-		$this->load->view('templates/footer');
 	}
 
 

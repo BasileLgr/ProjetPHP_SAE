@@ -23,9 +23,7 @@ class Dashboard extends CI_Controller {
 		$data['playlists'] = $this->Playlist_model->get_user_playlists($user_id);
 		$data['title'] = 'Tableau de bord';
 
-		$this->load->view('templates/header', $data);
 		$this->load->view('dashboard/index', $data);
-		$this->load->view('templates/footer');
 	}
 
 	public function change_password()
