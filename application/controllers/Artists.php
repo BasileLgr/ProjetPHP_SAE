@@ -26,7 +26,8 @@ class Artists extends CI_Controller {
 	public function list()
 	{
 		$sort = $this->input->get('sort');
-		$data['artists'] = $this->Artist_model->get_artists_sorted($sort);
+		$order = $this->input->get('order') ?: 'ASC';
+		$data['artists'] = $this->Artist_model->get_artists_sorted($sort, $order);
 		$this->load->view('artists/list', $data);
 	}
 }

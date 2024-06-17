@@ -39,10 +39,10 @@ class Artist_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	public function get_artists_sorted($sort)
+	public function get_artists_sorted($sort, $order)
 	{
 		if ($sort == 'name') {
-			$this->db->order_by('name', 'ASC');
+			$this->db->order_by('name', $order);
 		}
 
 		$query = $this->db->get('artist');

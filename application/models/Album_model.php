@@ -8,26 +8,32 @@ class Album_model extends CI_Model {
 		$this->load->database();
 	}
 
-	public function get_albums()
+	public function get_albums($sort_by = 'name', $order = 'asc')
 	{
 		$this->db->select('album.*, artist.name as artist_name, genre.name as genre_name');
+		$this->db->from('album');
 		$this->db->join('artist', 'album.artistId = artist.id');
 		$this->db->join('genre', 'album.genreId = genre.id');
-		$query = $this->db->get('album');
+
+		if (in_array($sort_by, ['name', 'year', 'genre_name', 'artist_name']) && in_array($order, ['asc', 'desc'])) {
+			$this->db->order_by($sort_by, $order);
+		}
+
+		$query = $this->db->get();
 		return $query->result_array();
 	}
 
 	public function get_album($id)
 	{
 		$this->db->select('album.*, artist.name as artist_name, genre.name as genre_name, cover.jpeg as cover_image');
+		$this->db->from('album');
 		$this->db->join('artist', 'album.artistId = artist.id');
 		$this->db->join('genre', 'album.genreId = genre.id');
 		$this->db->join('cover', 'album.coverId = cover.id', 'left');
 		$this->db->where('album.id', $id);
-		$query = $this->db->get('album');
+		$query = $this->db->get();
 		return $query->row_array();
 	}
-
 
 	public function get_albums_by_artist($artist_id)
 	{
@@ -80,18 +86,6 @@ class Album_model extends CI_Model {
 		return ['albums' => $albums, 'songs' => $songs];
 	}
 
-	public function get_random_albums($limit)
-	{
-		$this->db->select('album.*, artist.name as artist_name, genre.name as genre_name');
-		$this->db->from('album');
-		$this->db->join('artist', 'album.artistId = artist.id', 'left');
-		$this->db->join('genre', 'album.genreId = genre.id', 'left');
-		$this->db->order_by('album.id', 'RANDOM');
-		$this->db->limit($limit);
-		$query = $this->db->get();
-		return $query->result_array();
-	}
-
 	public function get_random_albums_with_covers($limit)
 	{
 		$this->db->select('album.*, artist.name as artist_name, genre.name as genre_name, cover.jpeg as cover_image');
@@ -101,6 +95,46 @@ class Album_model extends CI_Model {
 		$this->db->join('cover', 'album.coverId = cover.id', 'left');
 		$this->db->order_by('album.id', 'RANDOM');
 		$this->db->limit($limit);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_albums_sorted($sort = null, $order = 'ASC', $genres = [])
+	{
+		$this->db->select('album.*, artist.name as artist_name, genre.name as genre_name, cover.jpeg as cover_image');
+		$this->db->from('album');
+		$this->db->join('artist', 'album.artistId = artist.id');
+		$this->db->join('genre', 'album.genreId = genre.id', 'left');
+		$this->db->join('cover', 'album.coverId = cover.id', 'left');
+
+		if (!empty($genres)) {
+			$this->db->where_in('album.genreId', $genres);
+		}
+
+		if ($sort) {
+			$this->db->order_by($sort, $order);
+		}
+
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_albums_by_genres($genres, $sort_by = 'name', $order = 'asc')
+	{
+		$this->db->select('album.*, artist.name as artist_name, genre.name as genre_name, cover.jpeg as cover_image');
+		$this->db->from('album');
+		$this->db->join('artist', 'album.artistId = artist.id');
+		$this->db->join('genre', 'album.genreId = genre.id');
+		$this->db->join('cover', 'album.coverId = cover.id', 'left');
+
+		if (!empty($genres)) {
+			$this->db->where_in('album.genreId', $genres);
+		}
+
+		if (in_array($sort_by, ['name', 'year', 'genre_name', 'artist_name']) && in_array($order, ['asc', 'desc'])) {
+			$this->db->order_by($sort_by, $order);
+		}
+
 		$query = $this->db->get();
 		return $query->result_array();
 	}

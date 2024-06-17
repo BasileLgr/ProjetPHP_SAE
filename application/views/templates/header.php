@@ -34,6 +34,9 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo site_url('artists/list'); ?>">Artistes</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo site_url('albums/list'); ?>">Albums</a>
+				</li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0" action="<?php echo site_url('search'); ?>" method="get">
 				<input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search" name="q">
