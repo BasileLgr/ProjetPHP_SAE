@@ -21,5 +21,13 @@ class Artists extends CI_Controller {
 		$this->load->view('artists/index', $data); // Appeler la vue index.php
 		$this->load->view('templates/footer');
 	}
+
+
+	public function list()
+	{
+		$sort = $this->input->get('sort');
+		$data['artists'] = $this->Artist_model->get_artists_sorted($sort);
+		$this->load->view('artists/list', $data);
+	}
 }
 ?>
