@@ -35,6 +35,7 @@ class Album_model extends CI_Model {
 		return $query->row_array();
 	}
 
+
 	public function get_albums_by_artist($artist_id)
 	{
 		$this->db->select('album.*, cover.jpeg as cover_image');

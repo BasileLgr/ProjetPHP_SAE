@@ -6,15 +6,24 @@
 
 	<h2>Albums</h2>
 	<?php if (!empty($albums)): ?>
-		<ul>
+		<div class="row">
 			<?php foreach ($albums as $album): ?>
-				<li>
-					<a href="<?php echo site_url('albums/view/' . $album['id']); ?>">
-						<?php echo $album['name']; ?> (<?php echo $album['year']; ?>)
-					</a>
-				</li>
+				<div class="col-md-4 mb-4">
+					<div class="card">
+						<?php if (!empty($album['cover_image'])): ?>
+							<img src="data:image/jpeg;base64,<?php echo base64_encode($album['cover_image']); ?>" class="card-img-top" alt="<?php echo $album['name']; ?>">
+						<?php endif; ?>
+						<div class="card-body">
+							<h5 class="card-title">
+								<a href="<?php echo site_url('albums/view/' . $album['id']); ?>">
+									<?php echo $album['name']; ?> (<?php echo $album['year']; ?>)
+								</a>
+							</h5>
+						</div>
+					</div>
+				</div>
 			<?php endforeach; ?>
-		</ul>
+		</div>
 	<?php else: ?>
 		<p>Aucun album trouvé.</p>
 	<?php endif; ?>
