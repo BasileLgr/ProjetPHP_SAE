@@ -7,16 +7,19 @@ class Library extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Playlist_model');
+		$this->load->model('Playlist_songs_model');
+		$this->load->model('Song_model');
 		$this->load->library('session');
 	}
 
 	public function view($id)
 	{
 		$user_id = $this->session->userdata('user_id');
+		$data['playlists'] = $this->Playlist_model->get_playlists_by_user($user_id);
 		$data['playlist'] = $this->Playlist_model->get_playlist($id);
 		$data['songs'] = $this->Playlist_model->get_playlist_songs($id);
 		$data['title'] = 'Détails de la Playlist';
-		$data['playlists'] = $this->Playlist_model->get_playlists_by_user($user_id); // Charger les playlists de l'utilisateur
+		$data['user_playlists'] = $this->Playlist_model->get_playlists_by_user($this->session->userdata('user_id'));
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('playlists/view', $data);
@@ -88,6 +91,8 @@ class Library extends CI_Controller {
 		$this->Playlist_model->add_song_to_playlist($playlist_id, $song_id);
 		redirect('library/view_playlist/' . $playlist_id);
 	}
+
+
 
 	public function remove_song_from_playlist($playlist_id, $song_id)
 	{

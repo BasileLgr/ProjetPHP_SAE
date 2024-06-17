@@ -21,17 +21,15 @@ class User_model extends CI_Model {
 		return $this->db->update('login', $data);
 	}
 
-	public function change_password($id, $new_password)
+	public function update_password($id, $new_password)
 	{
-		$data = array(
-			'MotDePasse' => password_hash($new_password, PASSWORD_DEFAULT)
-		);
 		$this->db->where('iDCompte', $id);
-		return $this->db->update('login', $data);
+		return $this->db->update('login', ['MotDePasse' => $new_password]);
 	}
 
 	public function delete_user($id)
 	{
+		$this->session->unset_userdata('logged_in');
 		$this->db->where('iDCompte', $id);
 		return $this->db->delete('login');
 	}

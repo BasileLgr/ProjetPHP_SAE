@@ -69,5 +69,6 @@ $route['logout'] = 'login/logout';
 $route['dashboard'] = 'dashboard/index';
 $route['register'] = 'register/index';
 $route['search'] = 'search/index';
+$route['playlists/delete/(:num)'] = 'playlists/delete/$1';
 
 

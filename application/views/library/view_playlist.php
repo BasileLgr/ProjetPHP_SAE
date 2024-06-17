@@ -12,7 +12,7 @@
 				<li>
 					<?php echo $song['name']; ?> - Artiste: <?php echo $song['artist_name']; ?>
 					<a href="<?php echo site_url('playlists/remove_song/' . $playlist['id'] . '/' . $song['id']); ?>" class="btn btn-danger btn-sm">x</a>
-					<button type="button" class="btn btn-primary btn-sm add-to-playlist" data-song-id="<?php echo $song['id']; ?>">+</button>
+					<button class="btn btn-secondary btn-sm" onclick="showAddToPlaylistPopup(<?php echo $song['id']; ?>)">+</button>
 				</li>
 			<?php endforeach; ?>
 		</ul>
@@ -30,23 +30,23 @@
 	</form>
 </div>
 
-<!-- Modal pour ajouter une chanson à une playlist -->
-<div class="modal fade" id="addToPlaylistModal" tabindex="-1" role="dialog" aria-labelledby="addToPlaylistModalLabel" aria-hidden="true">
+<!-- Popup Modal -->
+<div id="addToPlaylistPopup" class="modal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="addToPlaylistModalLabel">Ajouter à une Playlist</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<h5 class="modal-title">Ajouter à une playlist</h5>
+				<button type="button" class="close" onclick="closeAddToPlaylistPopup()" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<form id="add-to-playlist-form" method="post" action="<?php echo site_url('playlists/add_song'); ?>">
-					<input type="hidden" id="song-id" name="song_id" value="">
+				<form id="addToPlaylistForm" method="post" action="">
+					<input type="hidden" id="song_id" name="song_id" value="">
 					<div class="form-group">
-						<label for="playlist-id">Sélectionner une Playlist</label>
-						<select class="form-control" id="playlist-id" name="playlist_id" required>
-							<?php foreach ($user_playlists as $playlist): ?>
+						<label for="playlist_id">Sélectionnez une playlist:</label>
+						<<select class="form-control" id="playlist_id" name="playlist_id">
+							<?php foreach ($playlists as $playlist): ?>
 								<option value="<?php echo $playlist['id']; ?>"><?php echo $playlist['name']; ?></option>
 							<?php endforeach; ?>
 						</select>
@@ -59,13 +59,15 @@
 </div>
 
 <script>
-	$(document).ready(function() {
-		$('.add-to-playlist').on('click', function() {
-			var songId = $(this).data('song-id');
-			$('#song-id').val(songId);
-			$('#addToPlaylistModal').modal('show');
-		});
-	});
+	function showAddToPlaylistPopup(songId) {
+		document.getElementById('song_id').value = songId;
+		document.getElementById('addToPlaylistForm').action = '<?php echo site_url('playlists/add_song'); ?>';
+		$('#addToPlaylistPopup').modal('show');
+	}
+
+	function closeAddToPlaylistPopup() {
+		$('#addToPlaylistPopup').modal('hide');
+	}
 </script>
 
 <?php $this->load->view('templates/footer'); ?>

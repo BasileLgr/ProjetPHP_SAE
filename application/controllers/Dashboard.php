@@ -9,6 +9,7 @@ class Dashboard extends CI_Controller {
 		$this->load->model('Login_model');
 		$this->load->model('Playlist_model');
 		$this->load->library('session');
+		$this->load->model('User_model');
 	}
 
 	public function index()

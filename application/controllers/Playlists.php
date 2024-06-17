@@ -51,8 +51,28 @@ class Playlists extends CI_Controller {
 		redirect('playlists');
 	}
 
+	public function delete($id)
+	{
+		if (!$this->session->userdata('logged_in')) {
+			redirect('login');
+		}
+
+		$user_id = $this->session->userdata('user_id');
+
+		// Vérifiez si la playlist appartient à l'utilisateur
+		$playlist = $this->Playlist_model->get_playlist($id);
+		if ($playlist['user_id'] != $user_id) {
+			show_error('Vous ne pouvez pas supprimer cette playlist.');
+		}
+
+		$this->Playlist_model->delete_playlist($id);
+		redirect('library');
+	}
+
 	public function view($id)
 	{
+		$user_id = $this->session->userdata('user_id');
+		$data['playlists'] = $this->Playlist_model->get_playlists_by_user($user_id);
 		$data['playlist'] = $this->Playlist_model->get_playlist($id);
 		$data['songs'] = $this->Playlist_model->get_playlist_songs($id);
 		$data['title'] = 'Détails de la Playlist';
@@ -93,7 +113,7 @@ class Playlists extends CI_Controller {
 		$new_playlist_id = $this->Playlist_model->duplicate_playlist($id, $user_id);
 
 		if ($new_playlist_id) {
-			redirect('playlists/view/' . $new_playlist_id);
+			redirect('library');
 		} else {
 			show_error('Erreur lors de la duplication de la playlist.');
 		}

@@ -92,5 +92,3 @@
 		$('#playlistModal').modal('show');
 	}
 </script>
-
-<?php $this->load->view('templates/footer'); ?>
