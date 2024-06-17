@@ -2,28 +2,31 @@
 <?php $this->load->view('templates/header', ['title' => $title]); ?>
 
 <div class="container mt-5">
-	<h1><?php echo $playlist['name']; ?></h1>
+	<h1><?php echo $title; ?></h1>
+
+	<h2><?php echo $playlist['name']; ?></h2>
 	<a href="<?php echo site_url('playlists/duplicate/' . $playlist['id']); ?>" class="btn btn-secondary">Dupliquer la Playlist</a>
-	<h2>Chansons</h2>
-	<ul>
-		<?php foreach ($songs as $song): ?>
-			<li>
-				<?php echo $song['name']; ?>
-				<a href="<?php echo site_url('playlists/remove_song/' . $playlist['id'] . '/' . $song['id']); ?>" class="btn btn-danger btn-sm">Retirer</a>
-			</li>
-		<?php endforeach; ?>
-	</ul>
-	<form action="<?php echo site_url('playlists/add_song'); ?>" method="post">
+	<h3>Chansons</h3>
+	<?php if (!empty($songs)): ?>
+		<ul>
+			<?php foreach ($songs as $song): ?>
+				<li>
+					<?php echo $song['name']; ?> - Artiste: <?php echo isset($song['artist_name']) ? $song['artist_name'] : 'Inconnu'; ?>
+					<a href="<?php echo site_url('playlists/remove_song/' . $playlist['id'] . '/' . $song['id']); ?>" class="btn btn-danger btn-sm">Retirer</a>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	<?php else: ?>
+		<p>Aucune chanson trouvée.</p>
+	<?php endif; ?>
+
+	<!-- Formulaire pour ajouter des chansons aléatoires -->
+	<form action="<?php echo site_url('playlists/add_random_songs/' . $playlist['id']); ?>" method="post">
 		<div class="form-group">
-			<label for="song_id">Ajouter une chanson</label>
-			<select class="form-control" id="song_id" name="song_id">
-				<?php foreach ($this->Song_model->get_songs() as $song): ?>
-					<option value="<?php echo $song['id']; ?>"><?php echo $song['name']; ?></option>
-				<?php endforeach; ?>
-			</select>
+			<label for="song_count">Nombre de chansons à ajouter:</label>
+			<input type="number" class="form-control" id="song_count" name="song_count" min="1" required>
 		</div>
-		<input type="hidden" name="playlist_id" value="<?php echo $playlist['id']; ?>">
-		<button type="submit" class="btn btn-primary">Ajouter</button>
+		<button type="submit" class="btn btn-primary">Ajouter des chansons aléatoires</button>
 	</form>
 </div>
 

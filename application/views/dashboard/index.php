@@ -8,6 +8,7 @@
 			<?php foreach ($playlists as $playlist): ?>
 				<li>
 					<a href="<?php echo site_url('playlists/view/' . $playlist['id']); ?>"><?php echo $playlist['name']; ?></a>
+					<a href="<?php echo site_url('library/delete_playlist/' . $playlist['id']); ?>" class="btn btn-danger btn-sm">Supprimer</a>
 				</li>
 			<?php endforeach; ?>
 		</ul>

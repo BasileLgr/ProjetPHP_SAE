@@ -54,8 +54,12 @@ class Playlists extends CI_Controller {
 	public function view($id)
 	{
 		$data['playlist'] = $this->Playlist_model->get_playlist($id);
-		$data['songs'] = $this->Playlist_songs_model->get_songs_in_playlist($id);
+		$data['songs'] = $this->Playlist_model->get_playlist_songs($id);
+		$data['title'] = 'Détails de la Playlist';
+
+		$this->load->view('templates/header', $data);
 		$this->load->view('playlists/view', $data);
+		$this->load->view('templates/footer');
 	}
 
 	public function add_song()
@@ -82,10 +86,17 @@ class Playlists extends CI_Controller {
 		$new_playlist_id = $this->Playlist_model->duplicate_playlist($id, $user_id);
 
 		if ($new_playlist_id) {
-			redirect('library');
+			redirect('playlists/view/' . $new_playlist_id);
 		} else {
 			show_error('Erreur lors de la duplication de la playlist.');
 		}
+	}
+
+	public function add_random_songs($playlist_id)
+	{
+		$limit = $this->input->post('song_count');
+		$this->Playlist_model->add_random_songs_to_playlist($playlist_id, $limit);
+		redirect('playlists/view/' . $playlist_id);
 	}
 }
 ?>

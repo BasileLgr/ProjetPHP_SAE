@@ -64,7 +64,6 @@ class Playlist_model extends CI_Model {
 		return $this->db->insert('playlists', $data);
 	}
 
-
 	public function delete_playlist($playlist_id)
 	{
 		$this->db->where('id', $playlist_id);
@@ -89,42 +88,42 @@ class Playlist_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	public function duplicate_playlist($playlist_id, $user_id)
+	public function add_random_songs_to_playlist($playlist_id, $song_count)
 	{
-		// Duplicate playlist
+		// Obtenir les IDs des chansons déjà dans la playlist
+		$this->db->select('song_id');
+		$this->db->from('playlist_songs');
+		$this->db->where('playlist_id', $playlist_id);
+		$subquery = $this->db->get_compiled_select();
+
+		// Sélectionner des chansons aléatoires qui ne sont pas déjà dans la playlist
 		$this->db->select('*');
-		$this->db->from('playlists');
-		$this->db->where('id', $playlist_id);
+		$this->db->from('song');
+		$this->db->where("id NOT IN ($subquery)", NULL, FALSE);
+		$this->db->order_by('RAND()');
+		$this->db->limit($song_count);
 		$query = $this->db->get();
-		$playlist = $query->row_array();
+		$songs = $query->result_array();
 
-		if ($playlist) {
-			$new_playlist_data = array(
-				'name' => $playlist['name'] . ' (Copie)',
-				'user_id' => $user_id
+		foreach ($songs as $song) {
+			$data = array(
+				'playlist_id' => $playlist_id,
+				'song_id' => $song['id']
 			);
-			$this->db->insert('playlists', $new_playlist_data);
-			$new_playlist_id = $this->db->insert_id();
-
-			// Duplicate songs in playlist
-			$this->db->select('*');
-			$this->db->from('playlist_songs');
-			$this->db->where('playlist_id', $playlist_id);
-			$query = $this->db->get();
-			$songs = $query->result_array();
-
-			foreach ($songs as $song) {
-				$new_song_data = array(
-					'playlist_id' => $new_playlist_id,
-					'song_id' => $song['song_id']
-				);
-				$this->db->insert('playlist_songs', $new_song_data);
-			}
-
-			return $new_playlist_id;
+			$this->db->insert('playlist_songs', $data);
 		}
-
-		return false;
 	}
+
+	public function get_random_songs($limit)
+	{
+		$this->db->select('*');
+		$this->db->from('song');
+		$this->db->order_by('RAND()');
+		$this->db->limit($limit);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+
 }
 ?>
