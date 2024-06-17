@@ -18,12 +18,54 @@
 	<?php if (!empty($songs)): ?>
 		<ul class="list-group">
 			<?php foreach ($songs as $song): ?>
-				<li class="list-group-item"><?php echo $song['name']; ?></li>
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					<?php echo $song['name']; ?>
+					<?php if (!empty($playlists)): ?>
+						<button class="btn btn-sm btn-outline-primary" onclick="showPlaylistModal(<?php echo $song['id']; ?>)">Ajouter à une playlist</button>
+					<?php endif; ?>
+				</li>
 			<?php endforeach; ?>
 		</ul>
 	<?php else: ?>
 		<p>Aucune chanson trouvée pour cet album.</p>
 	<?php endif; ?>
 </div>
+
+<?php if (!empty($playlists)): ?>
+	<!-- Modal for adding to playlist -->
+	<div class="modal fade" id="playlistModal" tabindex="-1" role="dialog" aria-labelledby="playlistModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="playlistModalLabel">Ajouter à une playlist</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="addToPlaylistForm" method="post" action="<?php echo site_url('playlists/add_song'); ?>">
+						<input type="hidden" name="song_id" id="song_id">
+						<div class="form-group">
+							<label for="playlist_id">Sélectionnez une playlist:</label>
+							<select class="form-control" id="playlist_id" name="playlist_id">
+								<?php foreach ($playlists as $playlist): ?>
+									<option value="<?php echo $playlist['id']; ?>"><?php echo htmlspecialchars($playlist['name'], ENT_QUOTES, 'UTF-8'); ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<button type="submit" class="btn btn-primary">Ajouter</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function showPlaylistModal(songId) {
+			document.getElementById('song_id').value = songId;
+			$('#playlistModal').modal('show');
+		}
+	</script>
+<?php endif; ?>
 
 <?php $this->load->view('templates/footer'); ?>

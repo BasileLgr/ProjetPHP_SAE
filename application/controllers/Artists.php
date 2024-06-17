@@ -9,6 +9,8 @@ class Artists extends CI_Controller {
 		$this->load->model('Artist_model');
 		$this->load->model('Album_model');
 		$this->load->model('Song_model');
+		$this->load->model('Playlist_model'); // Ajouter le modèle des playlists
+		$this->load->library('session');
 	}
 
 	public function view($id)
@@ -17,9 +19,14 @@ class Artists extends CI_Controller {
 		$data['albums'] = $this->Album_model->get_albums_by_artist($id);
 		$data['songs'] = $this->Song_model->get_songs_by_artist($id);
 
-		$this->load->view('templates/header', $data);
-		$this->load->view('artists/index', $data); // Appeler la vue index.php
-		$this->load->view('templates/footer');
+		if ($this->session->userdata('logged_in')) {
+			$user_id = $this->session->userdata('user_id');
+			$data['playlists'] = $this->Playlist_model->get_user_playlists($user_id); // Charger les playlists de l'utilisateur
+		} else {
+			$data['playlists'] = [];
+		}
+
+		$this->load->view('artists/index', $data); // Utiliser 'index' au lieu de 'view'
 	}
 
 

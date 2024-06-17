@@ -47,11 +47,20 @@ class Playlist_model extends CI_Model {
 
 	public function add_song_to_playlist($playlist_id, $song_id)
 	{
-		$data = array(
-			'playlist_id' => $playlist_id,
-			'song_id' => $song_id
-		);
-		return $this->db->insert('playlist_songs', $data);
+		// Vérifier si la chanson est déjà dans la playlist
+		$this->db->where('playlist_id', $playlist_id);
+		$this->db->where('song_id', $song_id);
+		$query = $this->db->get('playlist_songs');
+
+		if ($query->num_rows() == 0) {
+			$data = array(
+				'playlist_id' => $playlist_id,
+				'song_id' => $song_id
+			);
+			return $this->db->insert('playlist_songs', $data);
+		} else {
+			return false; // La chanson est déjà dans la playlist
+		}
 	}
 
 	public function create_playlist($name, $user_id)

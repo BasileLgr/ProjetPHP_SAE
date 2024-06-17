@@ -10,6 +10,19 @@ class Library extends CI_Controller {
 		$this->load->library('session');
 	}
 
+	public function view($id)
+	{
+		$user_id = $this->session->userdata('user_id');
+		$data['playlist'] = $this->Playlist_model->get_playlist($id);
+		$data['songs'] = $this->Playlist_model->get_playlist_songs($id);
+		$data['title'] = 'Détails de la Playlist';
+		$data['playlists'] = $this->Playlist_model->get_playlists_by_user($user_id); // Charger les playlists de l'utilisateur
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('playlists/view', $data);
+		$this->load->view('templates/footer');
+	}
+
 	public function index()
 	{
 		if (!$this->session->userdata('logged_in')) {

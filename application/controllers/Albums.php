@@ -9,6 +9,8 @@ class Albums extends CI_Controller {
 		$this->load->model('Album_model');
 		$this->load->model('Song_model');
 		$this->load->model('Genre_model');
+		$this->load->model('Playlist_model');
+		$this->load->library('session');
 	}
 
 	public function index()
@@ -26,7 +28,17 @@ class Albums extends CI_Controller {
 			show_404();
 		}
 		$data['songs'] = $this->Song_model->get_songs_by_album($id);
+
+		if ($this->session->userdata('logged_in')) {
+			$user_id = $this->session->userdata('user_id');
+			$data['playlists'] = $this->Playlist_model->get_user_playlists($user_id);
+		} else {
+			$data['playlists'] = [];
+		}
+
+		$this->load->view('templates/header', $data);
 		$this->load->view('albums/index', $data);  // Load the index.php view
+		$this->load->view('templates/footer');
 	}
 
 	public function list()

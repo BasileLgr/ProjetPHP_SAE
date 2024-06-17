@@ -9,6 +9,8 @@ class Search extends CI_Controller {
 		$this->load->model('Artist_model');
 		$this->load->model('Album_model');
 		$this->load->model('Song_model');
+		$this->load->model('Playlist_model');
+		$this->load->library('session');
 	}
 
 	public function index()
@@ -26,6 +28,13 @@ class Search extends CI_Controller {
 			$data['songs'] = [];
 			$data['query'] = $query;
 
+			if ($this->session->userdata('logged_in')) {
+				$user_id = $this->session->userdata('user_id');
+				$data['playlists'] = $this->Playlist_model->get_user_playlists($user_id);
+			} else {
+				$data['playlists'] = [];
+			}
+
 			$this->load->view('templates/header', $data);
 			$this->load->view('search/results', $data);
 			$this->load->view('templates/footer');
@@ -37,6 +46,13 @@ class Search extends CI_Controller {
 		$data['songs'] = $this->Song_model->search_songs($query);
 
 		$data['query'] = $query;
+
+		if ($this->session->userdata('logged_in')) {
+			$user_id = $this->session->userdata('user_id');
+			$data['playlists'] = $this->Playlist_model->get_user_playlists($user_id);
+		} else {
+			$data['playlists'] = [];
+		}
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('search/results', $data);
@@ -51,6 +67,14 @@ class Search extends CI_Controller {
 		$data['albums'] = $this->Album_model->search_albums($query);
 		$data['artists'] = $this->Artist_model->search_artists($query);
 		$data['songs'] = $this->Song_model->search_songs($query);
+		$data['query'] = $query;
+
+		if ($this->session->userdata('logged_in')) {
+			$user_id = $this->session->userdata('user_id');
+			$data['playlists'] = $this->Playlist_model->get_user_playlists($user_id);
+		} else {
+			$data['playlists'] = [];
+		}
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('search/results', $data);
