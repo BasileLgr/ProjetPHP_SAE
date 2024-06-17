@@ -24,19 +24,20 @@ class Library extends CI_Controller {
 		$this->load->view('templates/footer');
 	}
 
-	public function view_playlist($playlist_id)
+	public function view_playlist($id)
 	{
 		if (!$this->session->userdata('logged_in')) {
 			redirect('login');
 		}
 
-		$data['playlist'] = $this->Playlist_model->get_playlist($playlist_id);
-		$data['songs'] = $this->Playlist_model->get_playlist_songs($playlist_id);
+		$data['playlist'] = $this->Playlist_model->get_playlist($id);
+		$data['songs'] = $this->Playlist_model->get_playlist_songs($id);
 
-		$this->load->view('templates/header', ['title' => $data['playlist']['name']]);
+		$this->load->view('templates/header', ['title' => 'Détails de la Playlist']);
 		$this->load->view('library/view_playlist', $data);
 		$this->load->view('templates/footer');
 	}
+
 
 	public function create_playlist()
 	{

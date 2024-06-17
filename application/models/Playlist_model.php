@@ -34,9 +34,12 @@ class Playlist_model extends CI_Model {
 
 	public function get_playlist_songs($playlist_id)
 	{
-		$this->db->select('song.*');
+		$this->db->select('song.*, artist.name as artist_name');
 		$this->db->from('playlist_songs');
 		$this->db->join('song', 'playlist_songs.song_id = song.id');
+		$this->db->join('track', 'song.id = track.songId', 'left');
+		$this->db->join('album', 'track.albumId = album.id', 'left');
+		$this->db->join('artist', 'album.artistId = artist.id', 'left');
 		$this->db->where('playlist_songs.playlist_id', $playlist_id);
 		$query = $this->db->get();
 		return $query->result_array();
@@ -51,14 +54,16 @@ class Playlist_model extends CI_Model {
 		return $this->db->insert('playlist_songs', $data);
 	}
 
-	public function create_playlist($user_id, $name)
+	public function create_playlist($name, $user_id)
 	{
 		$data = array(
-			'user_id' => $user_id,
-			'name' => $name
+			'name' => $name,
+			'user_id' => $user_id
 		);
+
 		return $this->db->insert('playlists', $data);
 	}
+
 
 	public function delete_playlist($playlist_id)
 	{
@@ -75,6 +80,13 @@ class Playlist_model extends CI_Model {
 		$this->db->where('playlist_id', $playlist_id);
 		$this->db->where('song_id', $song_id);
 		$this->db->delete('playlist_songs');
+	}
+
+	public function get_user_playlists($user_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$query = $this->db->get('playlists');
+		return $query->result_array();
 	}
 }
 ?>

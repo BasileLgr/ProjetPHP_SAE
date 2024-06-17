@@ -21,7 +21,23 @@ class Playlists extends CI_Controller {
 
 	public function create()
 	{
-		$this->load->view('playlists/create');
+		if (!$this->session->userdata('logged_in')) {
+			redirect('login');
+		}
+
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('name', 'Name', 'required');
+
+		if ($this->form_validation->run() === FALSE) {
+			$this->load->view('templates/header', ['title' => 'Créer une Playlist']);
+			$this->load->view('library/create_playlist');
+			$this->load->view('templates/footer');
+		} else {
+			$name = $this->input->post('name');
+			$user_id = $this->session->userdata('user_id');
+			$this->Playlist_model->create_playlist($name, $user_id);
+			redirect('library');
+		}
 	}
 
 	public function store()
