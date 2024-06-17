@@ -28,7 +28,11 @@
 						<img src="data:image/jpeg;base64,<?php echo base64_encode($album['cover_image']); ?>" class="card-img-top" alt="<?php echo $album['name']; ?>">
 					<?php endif; ?>
 					<div class="card-body">
-						<h5 class="card-title"><?php echo $album['name']; ?></h5>
+						<h5 class="card-title">
+							<a href="<?php echo site_url('albums/view/' . $album['id']); ?>">
+								<?php echo $album['name']; ?>
+							</a>
+						</h5>
 						<p class="card-text"><?php echo $album['year']; ?></p>
 						<p class="card-text"><strong>Genre:</strong> <?php echo $album['genre_name']; ?></p>
 						<p class="card-text"><strong>Artiste:</strong>

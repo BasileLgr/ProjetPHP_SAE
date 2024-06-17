@@ -17,13 +17,13 @@
 						<a href="<?php echo site_url('home'); ?>" class="text-dark">Accueil</a>
 					</li>
 					<li>
-						<a href="<?php echo site_url('albums'); ?>" class="text-dark">Albums</a>
+						<a href="<?php echo site_url('library'); ?>" class="text-dark">Ma librairie</a>
 					</li>
 					<li>
-						<a href="<?php echo site_url('artists'); ?>" class="text-dark">Artistes</a>
+						<a href="<?php echo site_url('artists/list'); ?>" class="text-dark">Artistes</a>
 					</li>
 					<li>
-						<a href="<?php echo site_url('songs'); ?>" class="text-dark">Chansons</a>
+						<a href="<?php echo site_url('albums/list'); ?>" class="text-dark">Albums</a>
 					</li>
 				</ul>
 			</div>
