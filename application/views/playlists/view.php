@@ -11,7 +11,7 @@
 				<li>
 					<?php echo $song['name']; ?> - Artiste: <?php echo $song['artist_name']; ?>
 					<a href="<?php echo site_url('playlists/remove_song/' . $playlist['id'] . '/' . $song['id']); ?>" class="btn btn-danger btn-sm">Supprimer</a>
-					<button class="btn btn-secondary btn-sm" onclick="showAddToPlaylistPopup(<?php echo $song['id']; ?>)">Ajouter à une playlist</button>
+					<button class="btn btn-secondary btn-sm" onclick="showAddToPlaylistPopup(<?php echo $song['id']; ?>)">+</button>
 				</li>
 			<?php endforeach; ?>
 		</ul>

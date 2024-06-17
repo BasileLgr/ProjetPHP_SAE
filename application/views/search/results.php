@@ -52,7 +52,7 @@
 				<a href="<?php echo site_url('albums/view/' . $song['album_id']); ?>">
 					<?php echo htmlspecialchars($song['album_name'], ENT_QUOTES, 'UTF-8'); ?>
 				</a>
-				<button class="btn btn-sm btn-outline-primary" onclick="showPlaylistModal(<?php echo $song['id']; ?>)">Ajouter à une playlist</button>
+				<button class="btn btn-sm btn-outline-primary" onclick="showPlaylistModal(<?php echo $song['id']; ?>)">+</button>
 			</li>
 		<?php endforeach; ?>
 	</ul>

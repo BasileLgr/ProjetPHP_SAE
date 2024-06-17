@@ -34,7 +34,7 @@
 			<?php foreach ($songs as $song): ?>
 				<li>
 					<?php echo $song['name']; ?>
-					<button class="btn btn-sm btn-outline-primary" onclick="showPlaylistModal(<?php echo $song['id']; ?>)">Ajouter à une playlist</button>
+					<button class="btn btn-sm btn-outline-primary" onclick="showPlaylistModal(<?php echo $song['id']; ?>)">+</button>
 				</li>
 			<?php endforeach; ?>
 		</ul>

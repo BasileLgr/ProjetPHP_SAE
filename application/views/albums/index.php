@@ -21,7 +21,7 @@
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<?php echo $song['name']; ?>
 					<?php if (!empty($playlists)): ?>
-						<button class="btn btn-sm btn-outline-primary" onclick="showPlaylistModal(<?php echo $song['id']; ?>)">Ajouter à une playlist</button>
+						<button class="btn btn-sm btn-outline-primary" onclick="showPlaylistModal(<?php echo $song['id']; ?>)">+</button>
 					<?php endif; ?>
 				</li>
 			<?php endforeach; ?>
