@@ -34,7 +34,6 @@ class Register extends CI_Controller {
 				'MotDePasse' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
 			);
 
-			// Debugging data
 			log_message('debug', 'User data: ' . print_r($data, TRUE));
 
 			if ($this->Login_model->create_user($data)) {
@@ -42,7 +41,6 @@ class Register extends CI_Controller {
 				$data['success'] = 'Votre compte a été créé avec succès ! Vous pouvez maintenant vous connecter.';
 				$this->load->view('register/index', $data);
 			} else {
-				// Debugging database error
 				$db_error = $this->db->error();
 				log_message('error', 'Database error: ' . print_r($db_error, TRUE));
 				$data['error'] = 'Une erreur s\'est produite lors de la création de votre compte. Veuillez réessayer.';

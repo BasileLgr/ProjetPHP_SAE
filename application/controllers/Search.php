@@ -17,7 +17,6 @@ class Search extends CI_Controller {
 	{
 		$query = $this->input->get('q', TRUE);
 
-		// Assurez-vous que la variable $query est une chaîne vide si elle est null
 		if ($query === NULL) {
 			$query = '';
 		}

@@ -58,7 +58,7 @@
 	</ul>
 <?php endif; ?>
 
-<!-- Modal for adding to playlist -->
+<!-- Ajouter playlist -->
 <div class="modal fade" id="playlistModal" tabindex="-1" role="dialog" aria-labelledby="playlistModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">

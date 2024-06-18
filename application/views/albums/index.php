@@ -14,7 +14,7 @@
 		</a>
 	</p>
 
-	<!-- Button to add entire album to playlist -->
+	<!-- Ajout d'un album a une playlist -->
 	<?php if (!empty($playlists)): ?>
 		<button class="btn btn-primary mb-3" onclick="showAddAlbumToPlaylistModal()">Ajouter l'album à une playlist</button>
 	<?php endif; ?>
@@ -37,7 +37,7 @@
 </div>
 
 <?php if (!empty($playlists)): ?>
-	<!-- Modal for adding song to playlist -->
+	<!-- Ajouter des sons a une playlist -->
 	<div class="modal fade" id="playlistModal" tabindex="-1" role="dialog" aria-labelledby="playlistModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -65,7 +65,7 @@
 		</div>
 	</div>
 
-	<!-- Modal for adding entire album to playlist -->
+	<!-- Ajout d'un album a une playlist -->
 	<div class="modal fade" id="addAlbumToPlaylistModal" tabindex="-1" role="dialog" aria-labelledby="addAlbumToPlaylistModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">

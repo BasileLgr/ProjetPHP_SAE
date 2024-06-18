@@ -29,7 +29,6 @@ class Login extends CI_Controller {
 				'logged_in' => TRUE
 			]);
 
-			// Rediriger vers la page d'origine après la connexion
 			$redirect_url = $this->session->userdata('redirect_url') ?? 'dashboard';
 			$this->session->unset_userdata('redirect_url');
 			redirect($redirect_url);

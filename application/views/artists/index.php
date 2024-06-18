@@ -49,7 +49,7 @@
 </div>
 
 <?php if (!empty($playlists)): ?>
-	<!-- Modal for adding song to playlist -->
+	<!-- Ajouter à la playlist -->
 	<div class="modal fade" id="playlistModal" tabindex="-1" role="dialog" aria-labelledby="playlistModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -77,7 +77,7 @@
 		</div>
 	</div>
 
-	<!-- Modal for adding artist to playlist -->
+	<!-- Ajouter artiste -->
 	<div class="modal fade" id="addArtistToPlaylistModal" tabindex="-1" role="dialog" aria-labelledby="addArtistToPlaylistModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">

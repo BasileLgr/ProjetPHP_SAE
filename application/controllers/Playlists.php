@@ -98,11 +98,8 @@ class Playlists extends CI_Controller {
 	{
 		$album_id = $this->input->post('album_id');
 		$playlist_id = $this->input->post('playlist_id');
-
-		// Obtenez toutes les chansons de l'album
 		$songs = $this->Song_model->get_songs_by_album($album_id);
 
-		// Ajoutez chaque chanson à la playlist
 		foreach ($songs as $song) {
 			$this->Playlist_model->add_song_to_playlist($playlist_id, $song['id']);
 		}

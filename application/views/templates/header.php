@@ -12,7 +12,7 @@
 		}
 		.content {
 			flex: 1 0 auto;
-			padding-top: 70px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
+			padding-top: 70px;
 		}
 		footer {
 			flex-shrink: 0;

@@ -62,7 +62,6 @@ class Playlist_model extends CI_Model {
 			$this->db->insert('playlists', $new_playlist_data);
 			$new_playlist_id = $this->db->insert_id();
 
-			// Duplicate songs in playlist
 			$this->db->select('*');
 			$this->db->from('playlist_songs');
 			$this->db->where('playlist_id', $playlist_id);
