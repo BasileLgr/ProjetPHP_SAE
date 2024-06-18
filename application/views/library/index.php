@@ -20,7 +20,7 @@
 			<?php foreach ($playlists as $playlist): ?>
 				<li>
 					<a href="<?php echo site_url('library/view_playlist/' . $playlist['id']); ?>"><?php echo $playlist['name']; ?></a>
-					<a href="<?php echo site_url('library/delete_playlist/' . $playlist['id']); ?>" class="btn btn-danger btn-sm">Supprimer</a>
+					<a href="<?php echo site_url('library/delete_playlist/' . $playlist['id']); ?>" class="btn btn-danger btn-sm">x</a>
 				</li>
 			<?php endforeach; ?>
 		</ul>

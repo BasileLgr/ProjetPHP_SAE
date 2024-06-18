@@ -79,7 +79,36 @@ class Playlists extends CI_Controller {
 		$this->load->view('playlists/view', $data);
 	}
 
+	public function add_artist_to_playlist()
+	{
+		$artist_id = $this->input->post('artist_id');
+		$playlist_id = $this->input->post('playlist_id');
 
+		// Obtenez toutes les chansons de l'artiste
+		$songs = $this->Song_model->get_songs_by_artist($artist_id);
+
+		// Ajoutez chaque chanson à la playlist
+		foreach ($songs as $song) {
+			$this->Playlist_model->add_song_to_playlist($playlist_id, $song['id']);
+		}
+
+		redirect('playlists/view/' . $playlist_id);
+	}
+	public function add_album_to_playlist()
+	{
+		$album_id = $this->input->post('album_id');
+		$playlist_id = $this->input->post('playlist_id');
+
+		// Obtenez toutes les chansons de l'album
+		$songs = $this->Song_model->get_songs_by_album($album_id);
+
+		// Ajoutez chaque chanson à la playlist
+		foreach ($songs as $song) {
+			$this->Playlist_model->add_song_to_playlist($playlist_id, $song['id']);
+		}
+
+		redirect('playlists/view/' . $playlist_id);
+	}
 
 	public function add_song()
 	{

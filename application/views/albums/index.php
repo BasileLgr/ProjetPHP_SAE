@@ -14,6 +14,11 @@
 		</a>
 	</p>
 
+	<!-- Button to add entire album to playlist -->
+	<?php if (!empty($playlists)): ?>
+		<button class="btn btn-primary mb-3" onclick="showAddAlbumToPlaylistModal()">Ajouter l'album à une playlist</button>
+	<?php endif; ?>
+
 	<h2 class="my-4">Liste des Chansons</h2>
 	<?php if (!empty($songs)): ?>
 		<ul class="list-group">
@@ -32,7 +37,7 @@
 </div>
 
 <?php if (!empty($playlists)): ?>
-	<!-- Modal for adding to playlist -->
+	<!-- Modal for adding song to playlist -->
 	<div class="modal fade" id="playlistModal" tabindex="-1" role="dialog" aria-labelledby="playlistModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -60,10 +65,42 @@
 		</div>
 	</div>
 
+	<!-- Modal for adding entire album to playlist -->
+	<div class="modal fade" id="addAlbumToPlaylistModal" tabindex="-1" role="dialog" aria-labelledby="addAlbumToPlaylistModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addAlbumToPlaylistModalLabel">Ajouter l'album à une playlist</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="addAlbumToPlaylistForm" method="post" action="<?php echo site_url('playlists/add_album_to_playlist'); ?>">
+						<input type="hidden" name="album_id" id="album_id" value="<?php echo $album['id']; ?>">
+						<div class="form-group">
+							<label for="playlist_id">Sélectionnez une playlist:</label>
+							<select class="form-control" id="album_playlist_id" name="playlist_id">
+								<?php foreach ($playlists as $playlist): ?>
+									<option value="<?php echo $playlist['id']; ?>"><?php echo htmlspecialchars($playlist['name'], ENT_QUOTES, 'UTF-8'); ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<button type="submit" class="btn btn-primary">Ajouter</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script>
 		function showPlaylistModal(songId) {
 			document.getElementById('song_id').value = songId;
 			$('#playlistModal').modal('show');
+		}
+
+		function showAddAlbumToPlaylistModal() {
+			$('#addAlbumToPlaylistModal').modal('show');
 		}
 	</script>
 <?php endif; ?>
