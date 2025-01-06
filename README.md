@@ -37,10 +37,6 @@ Accédez à votre librairie pour gérer vos playlists. Vous pouvez créer de nou
 
 Parcourez les listes d'albums et d'artistes, triez-les par différents critères et cliquez sur un album ou un artiste pour voir plus de détails.
 
-### __Contributions__
-
-Les contributions sont les bienvenues ! Si vous souhaitez contribuer, veuillez :
-
 # __Auteur__
 
 **LEGRELLE Basile**
